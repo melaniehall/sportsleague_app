@@ -11,6 +11,11 @@ margin-top: 100px;
 
 .hero-unit{
 	padding: 30px;
+	margin: 0px;
+}
+
+.hero-unit h3{
+	line-height: .01em;
 }
 
 
@@ -19,3 +24,7 @@ margin-top: 100px;
 	font-weight: bold;
 }
 
+.lastupdated{
+	font-size: 11px;
+	color: grey;
+}
