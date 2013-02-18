@@ -1,0 +1,21 @@
+table, tr, td{
+	padding: 10px;
+	border: 1px solid black;
+	margin-bottom: 20px;
+	width: 100%;
+}
+
+.page-wrap{
+margin-top: 100px;
+}
+
+.hero-unit{
+	padding: 30px;
+}
+
+
+.tablehead td{
+	background-color: grey;
+	font-weight: bold;
+}
+
