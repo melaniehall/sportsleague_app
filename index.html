@@ -16,10 +16,13 @@
   
   <script>
 
-  $(document).ready({
-    // $(".tab-bar li a").click(function{
-    //   $()
-    })
+  $(document).ready(function(){
+    $("#addteam").click(function(){
+      var firstName= $("#inputFirst").val();
+      $(".lastupdated").append(firstName + "hello");
+      $("#myModal").modal('hide');
+      console.log("hello")
+    });
 
   }); //end ready
   </script>
@@ -170,7 +173,7 @@
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    <button class="btn btn-primary">Add Team</button>
+    <button id="addteam" class="btn btn-primary">Add Team</button>
   </div>
 </div> <!-- End Modal -->
             <a href="#updatescore" class="btn">Updated Scores</a>
