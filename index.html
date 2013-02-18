@@ -117,7 +117,58 @@
 
         <div class="span3">
           <div class="well sidebar-nav">
-            <a href="#addteam" class="btn">Add Your Team</a>
+            <!-- <a href="" role="button" class="btn" data-toggle="modal">Launch demo modal</a> -->
+            <a href="#myModal" role="button" class="btn" data-toggle="modal">Add Your Team</a>
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Team Setup</h3>
+  </div>
+  <div class="modal-body">
+    <!-- Form Draft -->
+  <form class="form-horizontal">
+    <div class="control-group">
+      <label class="control-label" for="teamName" value="teamName">Team Name:</label>
+      <div class="controls">
+        <input type="text" id="inputName" placeholder="Team Name" maxlenght="30">
+      </div>
+    </div>  
+    <div class="control-group">
+      <label class="control-label" for="managerInfo">Manager Info</label>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="mgrName">Name:</label>
+      <div class="controls">
+        <input type="text" id="inputFirst" placeholder="First">
+        <input type="text" id="inputLast" placeholder="Last">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="phone" value="phone">Phone #:</label>
+      <div class="controls">
+        <input type="tel" id="phone" placeholder="123-456-7890" maxlength="12">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="zip" value="zip">ZIP code:</label>
+      <div class="controls">
+        <input type="text" id="zip" placeholder="37207" maxlength="5">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="sponsor" value="sponsor">Team Sponsor:</label>
+      <div class="controls">
+        <input type="text" id="sponsor" placeholder="Sponsor">
+      </div>
+    </div>      
+  </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary">Add Team</button>
+  </div>
+</div> <!-- End Modal -->
             <a href="#updatescore" class="btn">Updated Scores</a>
           </div><!--/.well -->
         </div><!--/span-->
@@ -125,7 +176,16 @@
       </div><!--/row-->
 
 
-
+<script>
+var teamData = function(teamName,first,last,phone,zip,sponsor) {
+  this.teamName = teamName;
+  this.first = first;
+  this.last = last;
+  this.phone = phone;
+  this.zip = zip;
+  this.sponsor = sponsor;
+};
+</script>
 
 
 
