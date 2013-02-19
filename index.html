@@ -15,14 +15,61 @@
   <script src="js/bootstrap.min.js"></script>
   
   <script>
-
+  
   $(document).ready(function(){
-    $("#addteam").click(function(){
-      var firstName= $("#inputFirst").val();
-      $(".lastupdated").append(firstName + "hello");
-      $("#myModal").modal('hide');
-      console.log("hello")
-    });
+    // $("#addteam").click(function(){
+    //   var firstName= $("#inputFirst").val();
+    //   $("table").append("<tr><td>" + firstName + "</td></tr>");
+    //   $("#myModal").modal('hide');
+    //   console.log("hello")
+    // });
+
+// Trying Serialize
+// var teamList= [];
+// $("#addteam").click(function(){
+//   var team= $(":input").serializeArray();
+
+//   jQuery.each(team, function(key, value){
+//     alert(key.value + ": " + value.value);
+//     // $("table").append("<tr><td>"+obj.value.value+"</td></tr>");
+//   })
+// $("#myModal").modal('hide');
+
+//Empty Array for Storing Data
+var teamList= [];
+
+var Team= function(teamName, mgrFirst, mgrLast, phone, zip, sponsor){
+  this.teamName= teamName;
+  this.mgrFirst= mgrFirst;
+  this.mgrLast= mgrLast;
+  this.phone= phone;
+  this.zip= zip;
+  this.sponsor= sponsor;
+
+};
+
+
+$("#addteam").click(function(){
+var participant= new Team ($("#inputName").val(), $("#inputFirst").val(), $("#inputLast").val(), $("#phone").val(), $("#zip").val(), $("#sponsor").val());
+  console.log(participant);
+
+  $("#myModal").modal('hide');
+   
+  teamList.push(participant);
+
+  $("table").empty();
+  
+  jQuery.each(teamList, function(index, value){
+    $("table").append("<tr><td>" + value.teamName + "</td><td> 0 </td> <td> 0 </td> <td>.000</td> </tr>" );
+    $("table").append("<p>" + value.mgrFirst + " " + value.mgrLast + "<br/>" + value.phone +"<br/>" + value.sponsor + "</p>");
+  }); //end jQuery.each 
+
+  console.log(teamList);
+
+  $("#form")[0].reset(); 
+
+ }); //end click
+
 
   }); //end ready
   </script>
@@ -134,11 +181,11 @@
   </div>
   <div class="modal-body">
     <!-- Form Draft -->
-  <form class="form-horizontal">
+  <form id="form" class="form-horizontal">
     <div class="control-group">
-      <label class="control-label" for="teamName" value="teamName">Team Name:</label>
+      <label class="control-label" for="teamName">Team Name:</label>
       <div class="controls">
-        <input type="text" id="inputName" placeholder="Team Name" maxlenght="30">
+        <input type="text" id="inputName" name="teamName" placeholder="Team Name" maxlength="30">
       </div>
     </div>  
     <div class="control-group">
@@ -147,26 +194,26 @@
     <div class="control-group">
       <label class="control-label" for="mgrName">Name:</label>
       <div class="controls">
-        <input type="text" id="inputFirst" placeholder="First">
-        <input type="text" id="inputLast" placeholder="Last">
+        <input type="text" id="inputFirst" name="mgrFirst" placeholder="First">
+        <input type="text" id="inputLast" name="mgrLast" placeholder="Last">
       </div>
     </div>
     <div class="control-group">
       <label class="control-label" for="phone" value="phone">Phone #:</label>
       <div class="controls">
-        <input type="tel" id="phone" placeholder="123-456-7890" maxlength="12">
+        <input type="tel" id="phone" name="phone" placeholder="123-456-7890" maxlength="12">
       </div>
     </div>
     <div class="control-group">
       <label class="control-label" for="zip" value="zip">ZIP code:</label>
       <div class="controls">
-        <input type="text" id="zip" placeholder="37207" maxlength="5">
+        <input type="text" id="zip" name="zip" placeholder="37207" maxlength="5">
       </div>
     </div>
     <div class="control-group">
       <label class="control-label" for="sponsor" value="sponsor">Team Sponsor:</label>
       <div class="controls">
-        <input type="text" id="sponsor" placeholder="Sponsor">
+        <input type="text" id="sponsor" name="sponsor" placeholder="Sponsor">
       </div>
     </div>      
   </form>
