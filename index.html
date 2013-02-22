@@ -242,7 +242,7 @@ $(document).ready(function(){
     //Empty Object to store JSON data
     var data = {};
 
-    //Attempt to stringify
+    
     
     
     
@@ -255,10 +255,10 @@ $(document).ready(function(){
       teamList.push(team_array);
       printTeam(team_array);
       clearForm();
-      // console.log(teamList_array);
-      // console.log(teamList);
-      var teamData = JSON.stringify(teamList);  
-      console.log(teamData);
+
+      //Attempt to stringify
+      data = JSON.stringify(teamList);  
+      console.log(data);
 
     }); //end click 
 
