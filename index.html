@@ -16,7 +16,7 @@
   
   <script>
   
-  $(document).ready(function(){
+  
     // $("#addteam").click(function(){
     //   var firstName= $("#inputFirst").val();
     //   $("table").append("<tr><td>" + firstName + "</td></tr>");
@@ -35,43 +35,45 @@
 //   })
 // $("#myModal").modal('hide');
 
-//Empty Array for Storing Data
-var teamList= [];
-
-var Team= function(teamName, mgrFirst, mgrLast, phone, zip, sponsor){
-  this.teamName= teamName;
-  this.mgrFirst= mgrFirst;
-  this.mgrLast= mgrLast;
-  this.phone= phone;
-  this.zip= zip;
-  this.sponsor= sponsor;
-
-};
 
 
-$("#addteam").click(function(){
-var participant= new Team ($("#inputName").val(), $("#inputFirst").val(), $("#inputLast").val(), $("#phone").val(), $("#zip").val(), $("#sponsor").val());
-  console.log(participant);
 
-  $("#myModal").modal('hide');
+
+// var Team= function(teamName, mgrFirst, mgrLast, phone, zip, sponsor){
+//   this.teamName= teamName;
+//   this.mgrFirst= mgrFirst;
+//   this.mgrLast= mgrLast;
+//   this.phone= phone;
+//   this.zip= zip;
+//   this.sponsor= sponsor;
+
+// };
+
+
+
+// $("#addteam").click(function(){
+// var participant= new Team ($("#inputName").val(), $("#inputFirst").val(), $("#inputLast").val(), $("#phone").val(), $("#zip").val(), $("#sponsor").val());
+//   console.log(participant);
+
+//   $("#myModal").modal('hide');
    
-  teamList.push(participant);
+//   teamList.push(participant);
 
-  $("table").empty();
+//   $("table").empty();
   
-  jQuery.each(teamList, function(index, value){
-    $("table").append("<tr><td>" + value.teamName + "</td><td> 0 </td> <td> 0 </td> <td>.000</td> </tr>" );
-    $("table").append("<p>" + value.mgrFirst + " " + value.mgrLast + "<br/>" + value.phone +"<br/>" + value.sponsor + "</p>");
-  }); //end jQuery.each 
+//   jQuery.each(teamList, function(index, value){
+//     $("table").append("<tr><td>" + value.teamName + "</td><td> 0 </td> <td> 0 </td> <td>.000</td> </tr>" );
+//     $("table").append("<p>" + value.mgrFirst + " " + value.mgrLast + "<br/>" + value.phone +"<br/>" + value.sponsor + "</p>");
+//   }); //end jQuery.each 
 
-  console.log(teamList);
+//   console.log(teamList);
 
-  $("#form")[0].reset(); 
+//   $("#form")[0].reset(); 
 
- }); //end click
+//  }); //end click
 
 
-  }); //end ready
+  
   </script>
   </head>
 
@@ -112,11 +114,11 @@ var participant= new Team ($("#inputName").val(), $("#inputFirst").val(), $("#in
 
 
         <div class="tab-content span9">
-          <div id="standings" class="hero-unit tab-pane active">
+          <div class="hero-unit tab-pane active">
             
             <h3>Hello, world!</h3>
             <p class="lastupdated">(Last updated on: 02/18/13)</p>
-            <table>
+            <table id="standings">
               <tr class="tablehead">
               <td>Team</td>
               <td> Wins</td>
@@ -150,7 +152,7 @@ var participant= new Team ($("#inputName").val(), $("#inputFirst").val(), $("#in
               </tr>
 
               <tr>
-              <td>Coming Soon</td>
+              <td></td>
               <td> -</td>
               <td>- </td>
               <td>-Team One</td>
@@ -185,7 +187,7 @@ var participant= new Team ($("#inputName").val(), $("#inputFirst").val(), $("#in
     <div class="control-group">
       <label class="control-label" for="teamName">Team Name:</label>
       <div class="controls">
-        <input type="text" id="inputName" name="teamName" placeholder="Team Name" maxlength="30">
+        <input type="text" class="team_inputs" name="teamName" placeholder="Team Name" maxlength="30">
       </div>
     </div>  
     <div class="control-group">
@@ -194,33 +196,33 @@ var participant= new Team ($("#inputName").val(), $("#inputFirst").val(), $("#in
     <div class="control-group">
       <label class="control-label" for="mgrName">Name:</label>
       <div class="controls">
-        <input type="text" id="inputFirst" name="mgrFirst" placeholder="First">
-        <input type="text" id="inputLast" name="mgrLast" placeholder="Last">
+        <input type="text" class="team_inputs" name="mgrFirst" placeholder="First">
+        <input type="text" class="team_inputs" name="mgrLast" placeholder="Last">
       </div>
     </div>
     <div class="control-group">
       <label class="control-label" for="phone" value="phone">Phone #:</label>
       <div class="controls">
-        <input type="tel" id="phone" name="phone" placeholder="123-456-7890" maxlength="12">
+        <input type="tel" class="team_inputs" name="phone" placeholder="123-456-7890" maxlength="12">
       </div>
     </div>
     <div class="control-group">
       <label class="control-label" for="zip" value="zip">ZIP code:</label>
       <div class="controls">
-        <input type="text" id="zip" name="zip" placeholder="37207" maxlength="5">
+        <input type="text" class="team_inputs" name="zip" placeholder="37207" maxlength="5">
       </div>
     </div>
     <div class="control-group">
       <label class="control-label" for="sponsor" value="sponsor">Team Sponsor:</label>
       <div class="controls">
-        <input type="text" id="sponsor" name="sponsor" placeholder="Sponsor">
+        <input type="text" class="team_inputs" name="sponsor" placeholder="Sponsor">
       </div>
     </div>      
   </form>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    <button id="addteam" class="btn btn-primary">Add Team</button>
+    <button id="addteam" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Add Team</button>
   </div>
 </div> <!-- End Modal -->
             <a href="#updatescore" class="btn">Updated Scores</a>
@@ -233,16 +235,44 @@ var participant= new Team ($("#inputName").val(), $("#inputFirst").val(), $("#in
 
 
 <script>
-var teamData = function(teamName,first,last,phone,zip,sponsor) {
-  this.teamName = teamName;
-  this.first = first;
-  this.last = last;
-  this.phone = phone;
-  this.zip = zip;
-  this.sponsor = sponsor;
-};
+$(document).ready(function(){
+    //Empty Array for Storing Team Data
+    var teamList= [];
+    
+    //Empty Object to store JSON data
+    var data = {};
 
-var array = function();
+    //Attempt to stringify
+    
+    
+    
+
+    $('#addteam').click(function(){
+      var team_array=[];
+      $('.team_inputs').each(function(){
+        team_array.push($(this).val());
+      });//end each
+      teamList.push(team_array);
+      printTeam(team_array);
+      clearForm();
+      // console.log(teamList_array);
+      // console.log(teamList);
+      var teamData = JSON.stringify(teamList);  
+      console.log(teamData);
+
+    }); //end click 
+
+    function printTeam(team_array){
+      $('#standings').append('<tr><td>' + team_array[0] + '</td></tr>');
+    };
+
+    function clearForm(){
+      $('.team_inputs').each(function(){
+        $(this).val('');
+      });//end each
+    };
+
+    }); //end ready
 </script>
 
 
