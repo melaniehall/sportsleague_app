@@ -5,76 +5,15 @@
     <title>Beer League Baseball Challenge</title>
   
   <!-- Styling -->
-  
   <link href="css/bootstrap.css" rel="stylesheet">
   <link href="css/bootstrap-responsive.css" rel="stylesheet">
    <link href="css/style.css" rel="stylesheet"> 
   
   <!-- Scripts -->
+  <script src="js/index.js"></script>
   <script src="js/jquery-1.7.2.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   
-  <script>
-  
-  
-    // $("#addteam").click(function(){
-    //   var firstName= $("#inputFirst").val();
-    //   $("table").append("<tr><td>" + firstName + "</td></tr>");
-    //   $("#myModal").modal('hide');
-    //   console.log("hello")
-    // });
-
-// Trying Serialize
-// var teamList= [];
-// $("#addteam").click(function(){
-//   var team= $(":input").serializeArray();
-
-//   jQuery.each(team, function(key, value){
-//     alert(key.value + ": " + value.value);
-//     // $("table").append("<tr><td>"+obj.value.value+"</td></tr>");
-//   })
-// $("#myModal").modal('hide');
-
-
-
-
-
-// var Team= function(teamName, mgrFirst, mgrLast, phone, zip, sponsor){
-//   this.teamName= teamName;
-//   this.mgrFirst= mgrFirst;
-//   this.mgrLast= mgrLast;
-//   this.phone= phone;
-//   this.zip= zip;
-//   this.sponsor= sponsor;
-
-// };
-
-
-
-// $("#addteam").click(function(){
-// var participant= new Team ($("#inputName").val(), $("#inputFirst").val(), $("#inputLast").val(), $("#phone").val(), $("#zip").val(), $("#sponsor").val());
-//   console.log(participant);
-
-//   $("#myModal").modal('hide');
-   
-//   teamList.push(participant);
-
-//   $("table").empty();
-  
-//   jQuery.each(teamList, function(index, value){
-//     $("table").append("<tr><td>" + value.teamName + "</td><td> 0 </td> <td> 0 </td> <td>.000</td> </tr>" );
-//     $("table").append("<p>" + value.mgrFirst + " " + value.mgrLast + "<br/>" + value.phone +"<br/>" + value.sponsor + "</p>");
-//   }); //end jQuery.each 
-
-//   console.log(teamList);
-
-//   $("#form")[0].reset(); 
-
-//  }); //end click
-
-
-  
-  </script>
   </head>
 
   <body>
@@ -125,13 +64,13 @@
               <td>Losses </td>
               <td>%</td>
               </tr>
-
-              <tr>
-              <td>Coming Soon</td>
+              <!-- teams will be added by AddTeamToTable Function -->
+              <!-- <tr>
+              <td></td>
               <td> -</td>
               <td>- </td>
               <td>-</td>
-              </tr>
+              </tr> -->
 
           </table>
           </div>
@@ -235,44 +174,7 @@
 
 
 <script>
-$(document).ready(function(){
-    //Empty Array for Storing Team Data
-    var teamList= [];
-    
-    //Empty Object to store JSON data
-    var data = {};
 
-    
-    
-    
-    
-
-    $('#addteam').click(function(){
-      var team_array=[];
-      $('.team_inputs').each(function(){
-        team_array.push($(this).val());
-      });//end each
-      teamList.push(team_array);
-      printTeam(team_array);
-      clearForm();
-
-      //Attempt to stringify
-      data = JSON.stringify(teamList);  
-      console.log(data);
-
-    }); //end click 
-
-    function printTeam(team_array){
-      $('#standings').append('<tr><td>' + team_array[0] + '</td></tr>');
-    };
-
-    function clearForm(){
-      $('.team_inputs').each(function(){
-        $(this).val('');
-      });//end each
-    };
-
-    }); //end ready
 </script>
 
 
