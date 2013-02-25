@@ -1,12 +1,43 @@
 $(document).ready(function(){
   // get from database
-  $.ajax({
-    url: 'backliftapp/teams',
-    type: "GET",
-    dataType: 'json',
-    data: 
+  //on load, populate table listTEams
+  listTeams = function(){
+    $.ajax({
+      url: '/backliftapp/teams',
+      type: "GET",
+      dataType: 'json',
+      success: function(data) {
+        //Add to teams list table
+        var table = $('#standings')
+        table.html("")
+        //loop (team)
+          for(var i=0; i< data.length; i++){
+        table.append('<tr><td>' + data[i].name + '</td><td>' + data[i].wins + '</td><td>' + data[i].losses + '</td><td>' + (data[i].wins)/(data[i].totalGames) + '</td></tr>')};
+      },
+      error: function(data){
+        alert("errors")
+      }
+    })
+  }
 
-  })
+  
+  saveTeam = function(team){
+    $.ajax({
+      url: '/backliftapp/teams',
+      type: "POST",
+      dataType: 'json',
+      data: team,
+      success: function(data) {
+        //Add to teams list table
+        listTeams()
+      }, 
+      error: function(data){
+        alert("errors");
+      }
+    })
+  }//end saveTeam function
+
+
     //Empty Array for Storing Team Data
     // var teamList= [];
     
@@ -34,12 +65,6 @@ $(document).ready(function(){
     //   this.sponsor= $('#sponsor').val();
     // };
 
-    //Variables to initialize wins/losses/percent columns. Plan to update numbers down the road
-    // var wins = 0;
-    // var losses = 0;
-    // var totalGames = 0;
-    // var winPercent = ((+wins)/(+totalGames));
-    // var winPercent = .000;
     
     //LOOKED AT OBJECT CONSTRUCTOR
     // function dataObject(name, mgrFirst, mgrLast, phone, zip, sponsor, wins, losses, totalGames) {
@@ -54,21 +79,10 @@ $(document).ready(function(){
     //   this.totalGames = totalGames;
     // }
 
-
-    var teamData = [];
-    
-
+    // Add a Team Form Click
     $('#addteam').click(function(){
-      var team_array=[];
-      $('.team_inputs').each(function(){
-        team_array.push($(this).val());
-      });//end each
-      
-      // data.push(team_array);
-      // printTeam(teamData);
-      clearForm();
-      
-      var data = {
+
+      var team = {
       "name": $('#inputName').val(),
       "mgrFirst": $('#inputFirst').val(),
       "mgrLast": $('#inputLast').val(),
@@ -79,18 +93,13 @@ $(document).ready(function(){
       "losses": 0,
       "totalGames": 0
       };
-      
-      // teamData = JSON.stringify(data);
-      // console.log(teamData);
-
+      //Ajax post
+      saveTeam(team);
+      clearForm();   
     }); //end click 
+    
+    listTeams();
 
-    // Function to Print the team name. Doesn't work yet
-    // function printTeam(teamData){
-    //   $('#standings').append('<tr><td>' + data.name + '<td>' + '0' + '<td>' + teamData.losses + '<td>' + (((teamData.wins)/(teamData.totalGames)).toFixed(3)) + '</td></tr>');
-    // };
-
-// data.totalGames/winPercent.toFixed(3)
 
     function clearForm(){
       $('.team_inputs').each(function(){
@@ -145,7 +154,7 @@ $(document).ready(function(){
 //   jQuery.each(teamList, function(index, value){
 //     $("table").append("<tr><td>" + value.teamName + "</td><td> 0 </td> <td> 0 </td> <td>.000</td> </tr>" );
 //     $("table").append("<p>" + value.mgrFirst + " " + value.mgrLast + "<br/>" + value.phone +"<br/>" + value.sponsor + "</p>");
-//   }); //end jQuery.each 
+//   }); //end jQuery.each  
 
 //   console.log(teamList);
 

@@ -10,8 +10,8 @@
    <link href="css/style.css" rel="stylesheet"> 
   
   <!-- Scripts -->
-  <script src="js/index.js"></script>
   <script src="js/jquery-1.7.2.min.js"></script>
+  <script src="js/index.js"></script>
   <script src="js/bootstrap.min.js"></script>
   
   </head>
@@ -59,10 +59,10 @@
             <p class="lastupdated">(Last updated on: 02/18/13)</p>
             <table id="standings">
               <tr class="tablehead">
-              <td>Team</td>
-              <td> Wins</td>
-              <td>Losses </td>
-              <td>%</td>
+              <th>Team</th>
+              <th> Wins</th>
+              <th>Losses </th>
+              <th>%</th>
               </tr>
               <!-- teams will be added by AddTeamToTable Function -->
               <!-- <tr>
@@ -126,7 +126,7 @@
     <div class="control-group">
       <label class="control-label" for="teamName">Team Name:</label>
       <div class="controls">
-        <input type="text" class="team_inputs" name="teamName" placeholder="Team Name" maxlength="30">
+        <input type="text" id="inputName" class="team_inputs" name="teamName" placeholder="Team Name" maxlength="30">
       </div>
     </div>  
     <div class="control-group">
@@ -135,26 +135,26 @@
     <div class="control-group">
       <label class="control-label" for="mgrName">Name:</label>
       <div class="controls">
-        <input type="text" class="team_inputs" name="mgrFirst" placeholder="First">
-        <input type="text" class="team_inputs" name="mgrLast" placeholder="Last">
+        <input type="text" id="inputFirst" class="team_inputs" name="mgrFirst" placeholder="First">
+        <input type="text" id="inputLast" class="team_inputs" name="mgrLast" placeholder="Last">
       </div>
     </div>
     <div class="control-group">
       <label class="control-label" for="phone" value="phone">Phone #:</label>
       <div class="controls">
-        <input type="tel" class="team_inputs" name="phone" placeholder="123-456-7890" maxlength="12">
+        <input type="tel" id="phone" class="team_inputs" name="phone" placeholder="123-456-7890" maxlength="12">
       </div>
     </div>
     <div class="control-group">
       <label class="control-label" for="zip" value="zip">ZIP code:</label>
       <div class="controls">
-        <input type="text" class="team_inputs" name="zip" placeholder="37207" maxlength="5">
+        <input type="text" id="zip" class="team_inputs" name="zip" placeholder="37207" maxlength="5">
       </div>
     </div>
     <div class="control-group">
       <label class="control-label" for="sponsor" value="sponsor">Team Sponsor:</label>
       <div class="controls">
-        <input type="text" class="team_inputs" name="sponsor" placeholder="Sponsor">
+        <input type="text" id="sponsor" class="team_inputs" name="sponsor" placeholder="Sponsor">
       </div>
     </div>      
   </form>
