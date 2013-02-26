@@ -13,11 +13,11 @@ $(document).ready(function(){
         leagueData = data;
         disableBtn(data);
         //Add to teams list table
-        var table = $('#standings')
-        table.html("")
+        var table = $('#standings');
+        table.html("");
         //loop (team)
           for(var i=0; i< data.length; i++){
-        table.append('<tr><td>' + data[i].name + '</td><td>' + data[i].wins + '</td><td>' + data[i].losses + '</td><td>' + (data[i].wins)/(data[i].totalGames) + '</td></tr>')};
+        table.append('<tr><td>' + data[i].name + '</td><td>' + data[i].wins + '</td><td>' + data[i].losses + '</td><td>' + ((+data[i].wins)/(+data[i].totalGames)).toFixed(3) + '</td></tr>')};
       },
       error: function(data){
         alert("Error, please try submitting your team again.")
