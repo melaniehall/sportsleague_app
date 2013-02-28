@@ -11,8 +11,8 @@
   
   <!-- Scripts -->
   <script src="js/jquery-1.7.2.min.js"></script>
-  <script src="js/index.js"></script>
   <script src="js/bootstrap.min.js"></script>
+  <script src="js/index.js"></script>
   
 
   
@@ -46,76 +46,62 @@
 <!-- End Nav Bar -->
 
 <div class="page-wrap container-fluid">
-<ul class="tab-bar nav nav-tabs">
-  <li class="active">
-    <a href="#standings" data-toggle="tab"><h4>Standings</h4></a>
-  </li>
-  <li><a href="#schedule" data-toggle="tab"><h4>Schedule/Scores</h4></a></li>
-</ul>
-
-
-        <div class="tab-content span9">
-          <div class="hero-unit tab-pane active">
+  <div class="tabbable">
+    <ul class="tab-bar nav nav-tabs">
+      <li class="active">
+        <a href="#standings" data-toggle="tab"><h4>Standings</h4></a>
+      </li>
+      <li><a href="#schedule" data-toggle="tab"><h4>Schedule/Scores</h4></a></li>
+    </ul>
+    <div class="tab-content span9">
+            <div class="hero-unit tab-pane active" id="standings">
             
             <h3>Hello, world!</h3>
             <p class="lastupdated">(Last updated on: 02/18/13)</p>
-            <table id="standings">
+            <table id="standingsTable">
               <tr class="tablehead">
               <th>Team</th>
               <th> Wins</th>
               <th>Losses </th>
               <th>%</th>
               </tr>
-              <!-- teams will be added by AddTeamToTable Function -->
-              <!-- <tr>
-              <td></td>
-              <td> -</td>
-              <td>- </td>
-              <td>-</td>
-              </tr> -->
+            
 
-          </table>
+            </table>
           </div>
 
-<div id="schedule" class="tab-pane hero-unit schedule">
+          <div id="schedule" class="tab-pane hero-unit schedule">
             
             <h3>Schedule</h3>
             <p class="lastupdated">(Last updated on: 02/18/13)</p>
             <table>
-              <tr class="tablehead">
-              <td>Date</td>
-              <td>Time</td>
-              <td>Home Team </td>
-              <td> Away Team</td>
-              <td>Field Number</td>
-              <td>Score</td>
-              
-              </tr>
-
-              <tr>
-              <td></td>
-              <td> -</td>
-              <td>- </td>
-              <td>-Team One</td>
-              <td> Team Two</td>
-              <td>- </td>
-              </tr>
-
-
-
+              <tbody id="scheduleTable">
+                <tr class="tablehead">
+                <td>Date</td>
+                <td>Time</td>
+                <td>Home Team </td>
+                <td> Away Team</td>
+                <td>Field Number</td>
+                <td>Score</td>
+                </tr>
+              </tbody>
+             
               
             </table>
-          </div>
+          </div> <!-- End Schedule Tab -->
+
 
         
-
-<!-- Sidebar -->
         </div><!--/span-->
+<!-- Sidebar -->
+        
 
         <div class="span3">
           <div class="well sidebar-nav">
-            <!-- <a href="" role="button" class="btn" data-toggle="modal">Launch demo modal</a> -->
-            <a href="#myModal" role="button" class="btn" data-toggle="modal">Add Your Team</a>
+<!-- Modal Button -->
+          <div id="addBtn">
+            <!-- Used JavaScript to replace contents with our Add Team Button based on the number of teams -->
+          </div>
 <!-- Modal -->
 <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
@@ -128,7 +114,7 @@
     <div class="control-group">
       <label class="control-label" for="teamName">Team Name:</label>
       <div class="controls">
-        <input type="text" id="inputName" class="team_inputs" name="teamName" placeholder="Team Name" maxlength="30">
+        <em>*</em><input type="text" id="inputName" class="team_inputs required" name="name" placeholder="Team Name" maxlength="30">
       </div>
     </div>  
     <div class="control-group">
@@ -137,39 +123,40 @@
     <div class="control-group">
       <label class="control-label" for="mgrName">Name:</label>
       <div class="controls">
-        <input type="text" id="inputFirst" class="team_inputs" name="mgrFirst" placeholder="First">
-        <input type="text" id="inputLast" class="team_inputs" name="mgrLast" placeholder="Last">
+        <em>*</em><input type="text" id="inputFirst" class="team_inputs required" name="name" placeholder="First">
+        <em>*</em><input type="text" id="inputLast" class="team_inputs required" name="name" placeholder="Last">
       </div>
     </div>
     <div class="control-group">
       <label class="control-label" for="phone" value="phone">Phone #:</label>
       <div class="controls">
-        <input type="tel" id="phone" class="team_inputs" name="phone" placeholder="123-456-7890" maxlength="12">
+        <em>*</em><input type="tel" id="phone" class="team_inputs required" name="number" placeholder="123-456-7890" maxlength="12">
       </div>
     </div>
     <div class="control-group">
       <label class="control-label" for="zip" value="zip">ZIP code:</label>
       <div class="controls">
-        <input type="text" id="zip" class="team_inputs" name="zip" placeholder="37207" maxlength="5">
+        <em>*</em><input type="text" id="zip" class="team_inputs required" name="number" placeholder="37207" maxlength="5">
       </div>
     </div>
     <div class="control-group">
       <label class="control-label" for="sponsor" value="sponsor">Team Sponsor:</label>
       <div class="controls">
-        <input type="text" id="sponsor" class="team_inputs" name="sponsor" placeholder="Sponsor">
+        <em>*</em><input type="text" id="sponsor" class="team_inputs required" name="name" placeholder="Sponsor">
       </div>
     </div>      
   </form>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    <button id="addteam" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Add Team</button>
+    <button id="addteam" class="btn btn-primary submit" type="submit" value= data-dismiss="modal" aria-hidden="true">Add Team</button>
   </div>
 </div> <!-- End Modal -->
-            <a href="#updatescore" class="btn">Updated Scores</a>
-          </div><!--/.well -->
-        </div><!--/span-->
-
+            <a href="#updatescore" class="btn">Updated Scores</a><br><br>
+            <a href="#beginseason" class="btn">Begin Season</a>
+            </div><!--/.well -->
+          </div><!--/span-->
+        </div> <!-- End tabs div -->
       </div><!--/row-->
 
     </div>
