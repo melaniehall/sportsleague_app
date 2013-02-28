@@ -1,4 +1,4 @@
-table, tr, td{
+table, tr, td, th{
 	padding: 10px;
 	border: 1px solid black;
 	margin-bottom: 20px;
@@ -19,7 +19,7 @@ margin-top: 100px;
 }
 
 
-.tablehead td{
+.tablehead th{
 	background-color: grey;
 	font-weight: bold;
 }
