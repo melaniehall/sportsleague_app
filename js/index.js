@@ -1,9 +1,11 @@
 $(document).ready(function(){
   
-  //global var to store team data
+//******************* global var to store team data ****************************************
+
   leagueData = [];
-  // get from database
-  //on load, populate table listTeams
+  
+//******************* on load, populate table listTeams from Database **********************
+
 
   listTeams = function(){
     $.ajax({
@@ -12,7 +14,7 @@ $(document).ready(function(){
       dataType: 'json',
       success: function(data) {
         leagueData = data;
-
+        
 
         disableBtn(data);
         //Add to teams list table
@@ -34,11 +36,8 @@ $(document).ready(function(){
     })
   }
 
+//******************** function to run when team is added by click *************************
 
-
-  
-
-  //function to run when team is added by .click
   saveTeam = function(team){
     $.ajax({
       url: '/backliftapp/teams',
@@ -58,7 +57,8 @@ $(document).ready(function(){
     })
   }//end saveTeam function
 
-  //disable button once 8 team max is reached
+//******************* disable button once 8 team max is reached ***************************
+
   function disableBtn(listTeams){
     if (listTeams.length < 4) {
       $('#addBtn').html('<a href="#myModal" role="button" class="btn btn-warning" data-toggle="modal">Sign Up Today! We need more teams start the season.</a> <br><br>')
@@ -69,8 +69,8 @@ $(document).ready(function(){
     }
   };//end disableBtn
 
+//******************** Add a Team Form Click **********************************************
 
-  // Add a Team Form Click
   $('#addteam').click(function(){
 
     var team = {
@@ -92,54 +92,77 @@ $(document).ready(function(){
     
   }); //end click 
     
-<<<<<<< HEAD
-  //Repopulate team list in table after click
+//****************** Repopulate team list in table after click ****************************
+
   listTeams();
+
+//****************** Begin Season Click / Populate Schedule *******************************
+
+$('#beginSeason').click(function(){
+  $.ajax({
+      url: '/backliftapp/teams',
+      type: "GET",
+      dataType: 'json',
+      success: function(data) {
+      leagueData = data;
+      populateSchedule(data);
+     } 
+  });//end Ajax
+});//end Begin Season click
+
+      var sched4 = [ 
+    [ [1, 4], [2, 3] ],
+    [ [1, 3], [2, 4] ],
+    [ [1, 2], [3, 4] ]
+    ];
+
+    var sched6 = [ 
+    [ [1, 6], [2, 5], [3, 4] ],
+    [ [1, 5], [4, 6], [2, 3] ],
+    [ [1, 4], [3, 5], [2, 6] ],
+    [ [1, 3], [2, 4], [5, 6] ],
+    [ [1, 2], [3, 6], [4, 5] ],
+    ];
+
+    var sched8 = [
+    [ [1, 8], [2, 7], [3, 6], [4, 5] ],
+    [ [1, 7], [6, 8], [2, 5], [3, 4] ],
+    [ [1, 6], [5, 7], [4, 8], [2, 3] ],
+    [ [1, 5], [4, 6], [3, 7], [2, 8] ],
+    [ [1, 4], [3, 5], [2, 6], [7, 8] ],
+    [ [1, 3], [2, 4], [5, 8], [6, 7] ],
+    [ [1, 2], [3, 8], [4, 7], [5, 6] ],
+    ];
 
 function populateSchedule (d) {
   if (d.length === 4) {
-    var s = sched4
-  } else if (d.length < 7) {
-    var s = sched6
+    var s = sched4;
+  } else if (d.length === 5 || d.length === 6) {
+    var s = sched6;
   } else {
-    var s = sched8
+    var s = sched8;
   }
 
-//iterate over our leagueData object //d-leagueData s-schedule w-weeks g-games 
-for (w = 0 ; w < s.length ; w++)
-  $('#scheduleTable')
+  //d-leagueData s-schedule w-weeks g-games 
+  for (w = 0 ; w < s.length ; w++) {
+    $('#scheduleTable').append("<tbody id='week + [w]'><tr><th><td>Week " + [w + 1] + "</td><td>Schedule" + "</td><td>Score" + "</td></th></tr></tbody>")
+
+    for (g = 0 ; g < s[w].length; g++) {
+      $("<tbody id='week[w]'").append("<tr><td>" + "Away Team" + "</td><td>" + "vs" + "</td><td>" + "Home Team" + "</td></tr>")
+      
+
+      // fill variables with values from the leagueArray[].teamName (for both teams)
+      // starting values for scores
+
+    }//end games loop
+
+  }// end week loop
+
+}// end populate
 
 
+//**************** Clear Form Function *****************************************************
 
-}
-
-
-
-  var sched4 = [ 
-[ [1, 4], [2, 3] ],
-[ [1, 3], [2, 4] ],
-[ [1, 2], [3, 4] ]
-];
-
-var sched6 = [ 
-[ [1, 6], [2, 5], [3, 4] ],
-[ [1, 5], [4, 6], [2, 3] ],
-[ [1, 4], [3, 5], [2, 6] ],
-[ [1, 3], [2, 4], [5, 6] ],
-[ [1, 2], [3, 6], [4, 5] ],
-];
-
-var sched8 = [
-[ [1, 8], [2, 7], [3, 6], [4, 5] ],
-[ [1, 7], [6, 8], [2, 5], [3, 4] ],
-[ [1, 6], [5, 7], [4, 8], [2, 3] ],
-[ [1, 5], [4, 6], [3, 7], [2, 8] ],
-[ [1, 4], [3, 5], [2, 6], [7, 8] ],
-[ [1, 3], [2, 4], [5, 8], [6, 7] ],
-[ [1, 2], [3, 8], [4, 7], [5, 6] ],
-];
-
-  //clear Form function
   function clearForm(){
     $('.team_inputs').each(function(){
       $(this).val('');
@@ -147,6 +170,6 @@ var sched8 = [
   };//end clearForm
 
 
-
+//**************** THE END *****************************************************************
 }); //end ready
 
