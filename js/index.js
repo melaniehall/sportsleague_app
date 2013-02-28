@@ -13,7 +13,7 @@ $(document).ready(function(){
         leagueData = data;
         disableBtn(data);
         //Add to teams list table
-        var table = $('#standings');
+        var table = $('#standingsTable');
         table.html("");
         //loop (team)
           for(var i=0; i< data.length; i++){
@@ -58,7 +58,6 @@ $(document).ready(function(){
   };//end disableBtn
 
 
-
   // Add a Team Form Click
   $('#addteam').click(function(){
 
@@ -84,6 +83,49 @@ $(document).ready(function(){
   //Repopulate team list in table after click
   listTeams();
 
+function populateSchedule (d) {
+  if (d.length === 4) {
+    var s = sched4
+  } else if (d.length < 7) {
+    var s = sched6
+  } else {
+    var s = sched8
+  }
+
+//iterate over our leagueData object //d-leagueData s-schedule w-weeks g-games 
+for (w = 0 ; w < s.length ; w++)
+  $('#scheduleTable')
+
+
+
+}
+
+
+
+  var sched4 = [ 
+[ [1, 4], [2, 3] ],
+[ [1, 3], [2, 4] ],
+[ [1, 2], [3, 4] ]
+];
+
+var sched6 = [ 
+[ [1, 6], [2, 5], [3, 4] ],
+[ [1, 5], [4, 6], [2, 3] ],
+[ [1, 4], [3, 5], [2, 6] ],
+[ [1, 3], [2, 4], [5, 6] ],
+[ [1, 2], [3, 6], [4, 5] ],
+];
+
+var sched8 = [
+[ [1, 8], [2, 7], [3, 6], [4, 5] ],
+[ [1, 7], [6, 8], [2, 5], [3, 4] ],
+[ [1, 6], [5, 7], [4, 8], [2, 3] ],
+[ [1, 5], [4, 6], [3, 7], [2, 8] ],
+[ [1, 4], [3, 5], [2, 6], [7, 8] ],
+[ [1, 3], [2, 4], [5, 8], [6, 7] ],
+[ [1, 2], [3, 8], [4, 7], [5, 6] ],
+];
+
   //clear Form function
   function clearForm(){
     $('.team_inputs').each(function(){
@@ -95,38 +137,3 @@ $(document).ready(function(){
 
 }); //end ready
    
-// Trying Serialize
-// var teamList= [];
-// $("#addteam").click(function(){
-//   var team= $(":input").serializeArray();
-
-//   jQuery.each(team, function(key, value){
-//     alert(key.value + ": " + value.value);
-//     // $("table").append("<tr><td>"+obj.value.value+"</td></tr>");
-//   })
-// $("#myModal").modal('hide');
-
-
-
-
-
-// $("#addteam").click(function(){
-// var participant= new Team ($("#inputName").val(), $("#inputFirst").val(), $("#inputLast").val(), $("#phone").val(), $("#zip").val(), $("#sponsor").val());
-//   console.log(participant);
-
-//   $("#myModal").modal('hide');
-   
-//   teamList.push(participant);
-
-//   $("table").empty();
-  
-//   jQuery.each(teamList, function(index, value){
-//     $("table").append("<tr><td>" + value.teamName + "</td><td> 0 </td> <td> 0 </td> <td>.000</td> </tr>" );
-//     $("table").append("<p>" + value.mgrFirst + " " + value.mgrLast + "<br/>" + value.phone +"<br/>" + value.sponsor + "</p>");
-//   }); //end jQuery.each  
-
-//   console.log(teamList);
-
-//   $("#form")[0].reset(); 
-
-//  }); //end click
