@@ -145,10 +145,14 @@ function populateSchedule (d) {
 
   //d-leagueData s-schedule w-weeks g-games 
   for (w = 0 ; w < s.length ; w++) {
-    $('#scheduleTable').append("<tbody id='week + [w]'><tr><th><td>Week " + [w + 1] + "</td><td>Schedule" + "</td><td>Score" + "</td></th></tr></tbody>")
-
+    $('#scheduleTable').append("<tbody id='week" + w + "'class='tablehead'><tr><th>Week " + [w + 1] + "</th><th>Score" + "</th></tr></tbody>")
     for (g = 0 ; g < s[w].length; g++) {
-      $("<tbody id='week[w]'").append("<tr><td>" + "Away Team" + "</td><td>" + "vs" + "</td><td>" + "Home Team" + "</td></tr>")
+      var awayTeam = d[s[w][g][0]-1].name 
+      var homeTeam = d[s[w][g][1]-1].name
+      awayScore = 0;
+      homeScore = 0;
+
+      $("#week" + w).append("<tr><td>" + awayTeam + " vs. " + homeTeam + "</td><td>"+ awayScore + "-" + homeScore + "</td></tr>")
       
 
       // fill variables with values from the leagueArray[].teamName (for both teams)
@@ -160,6 +164,11 @@ function populateSchedule (d) {
 
 }// end populate
 
+// >>>>>>TO CREATE A BYE- create an if/else statement that targets whether or not the teamlist is odd or even.
+// Use the % to do this
+// For the bye schedule, start at 1 and subtract 2
+
+
 
 //**************** Clear Form Function *****************************************************
 
@@ -169,6 +178,9 @@ function populateSchedule (d) {
     });//end each
   };//end clearForm
 
+//**************** Delete One Entry at a Time *****************************************************
+
+// $.get("/backliftapp/teams", function(data) {  $.ajax({type:"delete", url:"/backliftapp/teams/"+data[index#]._id}); } );
 
 //**************** THE END *****************************************************************
 }); //end ready
