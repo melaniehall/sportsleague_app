@@ -4,6 +4,7 @@ $(document).ready(function(){
   leagueData = [];
   // get from database
   //on load, populate table listTeams
+
   listTeams = function(){
     $.ajax({
       url: '/backliftapp/teams',
@@ -11,19 +12,29 @@ $(document).ready(function(){
       dataType: 'json',
       success: function(data) {
         leagueData = data;
+
+
         disableBtn(data);
         //Add to teams list table
-        var table = $('#standingsTable');
-        table.html("");
+
+        var table = $('#standingsTable')
+        table.html("")
         //loop (team)
           for(var i=0; i< data.length; i++){
-        table.append('<tr><td>' + data[i].name + '</td><td>' + data[i].wins + '</td><td>' + data[i].losses + '</td><td>' + ((+data[i].wins)/(+data[i].totalGames)).toFixed(3) + '</td></tr>')};
-      },
+        table.append('<tr><td><a>' + data[i].name + '</a><p class="moreinfo">Manager: '+ data[i].mgrFirst + ' '+ data[i].mgrLast + '  |  Phone: '+ data[i].phone + '<br/> Sponsored by: ' + data[i].sponsor + '</p></td><td>' + data[i].wins + '</td><td>' + data[i].losses + '</td><td>' + (data[i].wins)/(data[i].totalGames) + '</td></tr>')};
+        $(".moreinfo").hide()
+        $("td a").click(function(){
+          $(this).next(".moreinfo").toggle();
+        });
+      },      
+
       error: function(data){
         alert("Error, please try submitting your team again.")
       }
     })
   }
+
+
 
   
 
@@ -36,6 +47,7 @@ $(document).ready(function(){
       data: team,
       success: function(data) {
         leagueData.push(data);
+
         //Add to teams list table
         listTeams();
         disableBtn(data);
@@ -80,6 +92,7 @@ $(document).ready(function(){
     
   }); //end click 
     
+<<<<<<< HEAD
   //Repopulate team list in table after click
   listTeams();
 
@@ -136,4 +149,4 @@ var sched8 = [
 
 
 }); //end ready
-   
+
