@@ -108,6 +108,7 @@ $('#beginSeason').click(function(){
       populateSchedule(data);
      } 
   });//end Ajax
+
 });//end Begin Season click
 
       var sched4 = [ 
@@ -135,38 +136,79 @@ $('#beginSeason').click(function(){
     ];
 
 function populateSchedule (d) {
-  if (d.length === 4) {
-    var s = sched4;
-  } else if (d.length === 5 || d.length === 6) {
-    var s = sched6;
-  } else {
-    var s = sched8;
-  }
+ 
 
-  //d-leagueData s-schedule w-weeks g-games 
-  for (w = 0 ; w < s.length ; w++) {
-    $('#scheduleTable').append("<tbody id='week" + w + "'class='tablehead'><tr><th>Week " + [w + 1] + "</th><th>Score" + "</th></tr></tbody>")
-    for (g = 0 ; g < s[w].length; g++) {
-      var awayTeam = d[s[w][g][0]-1].name 
-      var homeTeam = d[s[w][g][1]-1].name
+      if (d.length === 4) {
+        var s = sched4;
+      } else if (d.length === 5 || d.length === 6) {
+        var s = sched6;
+      } else{
+        var s = sched8;
+      }
+
+      //d-leagueData s-schedule w-weeks g-games 
+      for (w = 0 ; w < s.length ; w++) {
+        if (d.length%2 === 0){
+              $('#scheduleTable').append("<tbody id='week" + w + "'class='tablehead'><tr><th>Week " + [w + 1] + "</th><th>Score" + "</th></tr></tbody>");
+              
+              for (g = 0 ; g < s[w].length; g++) {
+                var awayTeam = d[s[w][g][0]-1].name 
+                var homeTeam = d[s[w][g][1]-1].name
+                awayScore = 0;
+                homeScore = 0;
+
+                $("#week" + w).append("<tr><td>" + awayTeam + " vs. " + homeTeam + "</td><td>"+ awayScore + "-" + homeScore + "</td></tr>")
+                
+
+                // fill variables with values from the leagueArray[].teamName (for both teams)
+                // starting values for scores
+
+              }//end games loop
+
+
+
+        } //end if statement for EVEN NUMBERS
+
+
+ else{
+      var teamwithBye = d[s[w][0][1]-2].name
+      $('#scheduleTable').append("<tbody id='week" + w + "'class='tablehead'><tr><th>Week " + [w + 1] + "<br/>" +teamwithBye + " have a Bye</th><th>Score" + "</th><th class='enterscore hidden-btn'>Update</th></tr></tbody>")
+
+      for (g = 1 ; g < s[w].length; g++) {
+
+      var awayTeam = d[s[w][g][0]-2].name 
+      var homeTeam = d[s[w][g][1]-2].name
       awayScore = 0;
-      homeScore = 0;
+      homeScore = 0;     
+      $("#week" + w).append("<tr><td>" + awayTeam + " vs. " + homeTeam + "</td><td>"+ awayScore + "-" + homeScore + "</td><td class='enterscore  hidden-btn'><a class='btn'>Enter Score</a></td></tr>")
 
-      $("#week" + w).append("<tr><td>" + awayTeam + " vs. " + homeTeam + "</td><td>"+ awayScore + "-" + homeScore + "</td></tr>")
-      
 
-      // fill variables with values from the leagueArray[].teamName (for both teams)
-      // starting values for scores
 
     }//end games loop
+
+
+} // end ELSE loop for BYE WEEKS 
 
   }// end week loop
 
 }// end populate
 
-// >>>>>>TO CREATE A BYE- create an if/else statement that targets whether or not the teamlist is odd or even.
-// Use the % to do this
-// For the bye schedule, start at 1 and subtract 2
+//****************** Update Scores ****************************
+$('#updatescore').click(function(){
+
+$('.enterscore').removeClass('hidden-btn');
+
+  // $.ajax({
+  //     url: '/backliftapp/teams',
+  //     type: "POST",
+  //     dataType: 'json',
+  //     success: function(data) {
+  //     scoreData = data;
+  //     updateScores(data);
+  //    } 
+  // });//end Ajax
+
+});//end Begin Season click
 
 
 
