@@ -5,6 +5,9 @@ table, tr, td, th{
 	width: 100%;
 }
 
+.hidden-btn{
+	visibility: hidden;
+}
 .page-wrap{
 margin-top: 100px;
 }
