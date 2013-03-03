@@ -3,6 +3,8 @@ $(document).ready(function(){
 //******************* global var to store team data ****************************************
 
   leagueData = [];
+  var homeTeam, awayTeam, week, game;
+
   
 //******************* on load, populate table listTeams from Database **********************
 
@@ -157,7 +159,7 @@ function populateSchedule (d) {
                 awayScore = 0;
                 homeScore = 0;
 
-                $("#week" + w).append("<tr><td>" + awayTeam + " vs. " + homeTeam + "</td><td>"+ awayScore + "-" + homeScore + "</td></tr>")
+                $("#week" + w).append("<tr><td>" + awayTeam + " vs. " + homeTeam + "</td><td data-week=" + w + " data-game= " + g + ">"+ awayScore + "-" + homeScore + "</td></tr>")
                 
 
                 // fill variables with values from the leagueArray[].teamName (for both teams)
@@ -180,7 +182,7 @@ function populateSchedule (d) {
       var homeTeam = d[s[w][g][1]-2].name
       awayScore = 0;
       homeScore = 0;     
-      $("#week" + w).append("<tr><td>" + awayTeam + " vs. " + homeTeam + "</td><td>"+ awayScore + "-" + homeScore + "</td><td class='enterscore  hidden-btn'><a class='btn'>Enter Score</a></td></tr>")
+      $("#week" + w).append("<tr><td>" + awayTeam + " vs. " + homeTeam + "</td><td data-week=" + w + " data-game= " + g + ">"+ awayScore + "-" + homeScore + "</td><td class='enterscore  hidden-btn'><a class='btn'>Enter Score</a></td></tr>")
 
 
 
@@ -193,10 +195,23 @@ function populateSchedule (d) {
 
 }// end populate
 
-//****************** Update Scores ****************************
+//****************** Update Scores Click ****************************
+
 $('#updatescore').click(function(){
 
 $('.enterscore').removeClass('hidden-btn');
+$('#updatescore').hide()
+$('.enterscore a').addClass('btn-danger')
+$('#schedule p').append('<br/><a id="doneupdating" class="btn btn-danger">Done Updating</a>');
+    
+    $('.enterscore').click(function(){
+        $(this).prev().html("<input type='text' id='' />" + " - " + "<input type='text' id='' />");
+
+        $(this).contents().hide()
+        $(this).append('<a id="doneupdating" class="btn btn-danger">Submit</a>');
+    
+      // $(this).prev().html("<input id="$()" type='text'></input");
+    }); 
 
   // $.ajax({
   //     url: '/backliftapp/teams',
@@ -210,6 +225,11 @@ $('.enterscore').removeClass('hidden-btn');
 
 });//end Begin Season click
 
+ 
+
+function enterScore(){
+  $("table tr:first-of-type").css("background", "blue");
+};
 
 
 //**************** Clear Form Function *****************************************************
