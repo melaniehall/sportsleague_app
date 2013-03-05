@@ -25,7 +25,7 @@ $(document).ready(function(){
         table.html("")
         //loop (team)
           for(var i=0; i< data.length; i++){
-        table.append('<tr><td><a>' + data[i].name + '</a><p class="moreinfo">Manager: '+ data[i].mgrFirst + ' '+ data[i].mgrLast + '  |  Phone: '+ data[i].phone + '<br/> Sponsored by: ' + data[i].sponsor + '</p></td><td>' + data[i].wins + '</td><td>' + data[i].losses + '</td><td>' + (+data[i].wins)/(+data[i].totalGames).toFixed() + '</td></tr>')};
+        table.append('<tr><td><a>' + data[i].name + '</a><p class="moreinfo">Manager: '+ data[i].mgrFirst + ' '+ data[i].mgrLast + '  |  Phone: '+ data[i].phone + '<br/> Sponsored by: ' + data[i].sponsor + '</p></td><td>' + data[i].wins + '</td><td>' + data[i].losses + '</td><td>' + ((+data[i].wins)/(+data[i].totalGames)).toFixed(3) + '</td></tr>')};
         $(".moreinfo").hide()
         $("td a").click(function(){
           $(this).next(".moreinfo").toggle();
@@ -307,12 +307,12 @@ $('#updatescore').click(function(){
 
         // Adding Wins + Losses to Standings Table
 
-        if (awayScore > homeScore) {
+        if ( +awayScore > +homeScore) {
 
           var wins = +awayTeam.wins + 1 ;
           var losses = +homeTeam.losses + 1 ;
-          var awaytotalGames: +awayTeam.totalGames + 1 ;
-          var hometotalGames: +homeTeam.totalGames + 1 ;
+          var awaytotalGames = +awayTeam.totalGames + 1 ;
+          var hometotalGames = +homeTeam.totalGames + 1 ;
 
           $.ajax({
             url: '/backliftapp/teams/' + awayTeam.id + '',
@@ -322,10 +322,11 @@ $('#updatescore').click(function(){
               wins: wins,
               totalGames: awaytotalGames},
             success: function(data){
+              listTeams();
               // alert(homeScore);
               console.log(data);
             }
-          });
+          });//end PUT
 
 
           $.ajax({
@@ -336,27 +337,55 @@ $('#updatescore').click(function(){
               losses: losses,
               totalGames: hometotalGames},
             success: function(data){
+              listTeams();
               // alert(awayScore);
               console.log(data);
             }
-          });
+          });// end PUT
 
-        //   //ajax PUT    teamID
-        //   awayTeam.wins = ++1
-        //   //ajax PUT
-        //   homeTeam.losses = ++1
-        // } else {
-        //   homeTeam.wins = ++1
-        //   awayTeam.losses = ++1
-        // }
-          } else {
-            alert("errors");
-          }
+          } else if ( +homeScore > +awayScore ) {
+            var wins = +homeTeam.wins + 1 ;
+            var losses = +awayTeam.losses + 1 ;
+            var hometotalGames = +homeTeam.totalGames + 1 ;
+            var awaytotalGames = +awayTeam.totalGames + 1 ;
 
-        }); //end Submit CLick    
+          $.ajax({
+            url: '/backliftapp/teams/' + homeTeam.id + '',
+            type: "PUT",
+            dataType: "JSON", 
+            data: {
+              wins: wins,
+              totalGames: hometotalGames},
+            success: function(data){
+              listTeams();
+              // alert(homeScore);
+              console.log(data);
+            }
+          });//end PUT
+
+
+          $.ajax({
+            url: '/backliftapp/teams/' + awayTeam.id + '',
+            type: "PUT",
+            dataType: "JSON", 
+            data: {
+              losses: losses,
+              totalGames: awaytotalGames},
+            success: function(data){
+              listTeams();
+              // alert(awayScore);
+              console.log(data);
+            }
+          });// end PUT
+          }//end Else
+
+
+    }); //end Submit CLick    
     
-    $('#doneupdating').click(function(){
-      $("#scheduleTable").html("");
+
+
+      $('#doneupdating').click(function(){
+        $("#scheduleTable").html("");
           $.ajax({
               url: '/backliftapp/teams',
               type: "GET",
@@ -367,6 +396,8 @@ $('#updatescore').click(function(){
              } 
           });//end Ajax
 
+
+
           $(this).remove();
     })
 
@@ -374,12 +405,12 @@ $('#updatescore').click(function(){
 
 }// end populate
 
-//****************** Update Scores Click ****************************
+//******************  ****************************
 
 
 
 
-//**************** Clear Form Function *****************************************************
+//**************** recordScore sent to server *****************************************************
 function recordScore(homeTeam, awayTeam, homeScore, awayScore, week){
 
 week = Number(week);
@@ -392,7 +423,7 @@ if (week === 0) {
     data: {
       week1: homeScore},
     success: function(data){
-      alert(homeScore);
+      // alert(homeScore);
       console.log(data);
     }
   });
@@ -404,7 +435,7 @@ if (week === 0) {
     data: {
       week1: awayScore},
     success: function(data){
-      alert(awayScore);
+      // alert(awayScore);
       console.log(data);
     }
   });
@@ -417,7 +448,7 @@ if (week === 0) {
     data: {
       week2: homeScore},
     success: function(data){
-      alert(homeScore);
+      // alert(homeScore);
       console.log(data);
     }
   });
@@ -429,7 +460,7 @@ if (week === 0) {
     data: {
       week2: awayScore},
     success: function(data){
-      alert(awayScore);
+      // alert(awayScore);
       console.log(data);
     }
   });
@@ -443,7 +474,7 @@ if (week === 0) {
     data: {
       week3: homeScore},
     success: function(data){
-      alert(homeScore);
+      // alert(homeScore);
       console.log(data);
     }
   });
@@ -455,7 +486,7 @@ if (week === 0) {
     data: {
       week3: awayScore},
     success: function(data){
-      alert(awayScore);
+      // alert(awayScore);
       console.log(data);
     }
   });
@@ -468,7 +499,7 @@ if (week === 0) {
     data: {
       week4: homeScore},
     success: function(data){
-      alert(homeScore);
+      // alert(homeScore);
       console.log(data);
     }
   });
@@ -480,7 +511,7 @@ if (week === 0) {
     data: {
       week4: awayScore},
     success: function(data){
-      alert(awayScore);
+      // alert(awayScore);
       console.log(data);
     }
   });
@@ -494,7 +525,7 @@ if (week === 0) {
     data: {
       week5: homeScore},
     success: function(data){
-      alert(homeScore);
+      // alert(homeScore);
       console.log(data);
     }
   });
@@ -506,7 +537,7 @@ if (week === 0) {
     data: {
       week5: awayScore},
     success: function(data){
-      alert(awayScore);
+      // alert(awayScore);
       console.log(data);
     }
   });
@@ -520,7 +551,7 @@ if (week === 0) {
     data: {
       week6: homeScore},
     success: function(data){
-      alert(homeScore);
+      // alert(homeScore);
       console.log(data);
     }
   });
@@ -532,7 +563,7 @@ if (week === 0) {
     data: {
       week6: awayScore},
     success: function(data){
-      alert(awayScore);
+      // alert(awayScore);
       console.log(data);
     }
   });
@@ -546,7 +577,7 @@ if (week === 0) {
     data: {
       week7: homeScore},
     success: function(data){
-      alert(homeScore);
+      // alert(homeScore);
       console.log(data);
     }
   });
@@ -558,7 +589,7 @@ if (week === 0) {
     data: {
       week7: awayScore},
     success: function(data){
-      alert(awayScore);
+      // alert(awayScore);
       console.log(data);
     }
   });
