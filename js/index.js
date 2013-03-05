@@ -25,7 +25,7 @@ $(document).ready(function(){
         table.html("")
         //loop (team)
           for(var i=0; i< data.length; i++){
-        table.append('<tr><td><a>' + data[i].name + '</a><p class="moreinfo">Manager: '+ data[i].mgrFirst + ' '+ data[i].mgrLast + '  |  Phone: '+ data[i].phone + '<br/> Sponsored by: ' + data[i].sponsor + '</p></td><td>' + data[i].wins + '</td><td>' + data[i].losses + '</td><td>' + (data[i].wins)/(data[i].totalGames) + '</td></tr>')};
+        table.append('<tr><td><a>' + data[i].name + '</a><p class="moreinfo">Manager: '+ data[i].mgrFirst + ' '+ data[i].mgrLast + '  |  Phone: '+ data[i].phone + '<br/> Sponsored by: ' + data[i].sponsor + '</p></td><td>' + data[i].wins + '</td><td>' + data[i].losses + '</td><td>' + (+data[i].wins)/(+data[i].totalGames).toFixed() + '</td></tr>')};
         $(".moreinfo").hide()
         $("td a").click(function(){
           $(this).next(".moreinfo").toggle();
@@ -301,8 +301,58 @@ $('#updatescore').click(function(){
                   homeScore = homeTeam.week7;
                 }; 
 
+       // Copied Final Scores into schedule table
+
         $(this).parent().html(awayScore + " - " + homeScore);
-      
+
+        // Adding Wins + Losses to Standings Table
+
+        if (awayScore > homeScore) {
+
+          var wins = +awayTeam.wins + 1 ;
+          var losses = +homeTeam.losses + 1 ;
+          var awaytotalGames: +awayTeam.totalGames + 1 ;
+          var hometotalGames: +homeTeam.totalGames + 1 ;
+
+          $.ajax({
+            url: '/backliftapp/teams/' + awayTeam.id + '',
+            type: "PUT",
+            dataType: "JSON", 
+            data: {
+              wins: wins,
+              totalGames: awaytotalGames},
+            success: function(data){
+              // alert(homeScore);
+              console.log(data);
+            }
+          });
+
+
+          $.ajax({
+            url: '/backliftapp/teams/' + homeTeam.id + '',
+            type: "PUT",
+            dataType: "JSON", 
+            data: {
+              losses: losses,
+              totalGames: hometotalGames},
+            success: function(data){
+              // alert(awayScore);
+              console.log(data);
+            }
+          });
+
+        //   //ajax PUT    teamID
+        //   awayTeam.wins = ++1
+        //   //ajax PUT
+        //   homeTeam.losses = ++1
+        // } else {
+        //   homeTeam.wins = ++1
+        //   awayTeam.losses = ++1
+        // }
+          } else {
+            alert("errors");
+          }
+
         }); //end Submit CLick    
     
     $('#doneupdating').click(function(){
