@@ -1,6 +1,10 @@
 ##sportsleague_app
 ================
 
+###Contributors
+ * Melanie Hall [github](https://github.com/melaniehall)
+ * Cody Spriggs [github](https://github.com/cspriggs220/)
+
 ####On load, you'll find an empty league.  Here are the steps to setup your league:
 
  - You'll notice the alert button in the sidebar which directs you to add more teams before you can begin the season.
