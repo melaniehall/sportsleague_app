@@ -1,5 +1,7 @@
 ##sportsleague_app
 ================
+###This app allows you to create your own custom sports league. You can create teams and keep track of your season, as well as updating the league's standings.  
+
 
 ###Contributors
  * Melanie Hall [github](https://github.com/melaniehall)
