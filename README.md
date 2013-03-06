@@ -20,21 +20,21 @@
  - When you are finished submitting your scores, click the 'Done Updating' button in the sidebar.  This will repopulate the schedule page with the updated scores that you entered.
  - Click on the 'Standings' tab to view the results from the captured scores.
 
-###Things that work from Phase 1:
+##Things that work from Phase 1:
 -Bootstrap design
 -min of 4/max of 8 teams
 -adding teams (collect team info)
 -save team object to server
 -reveal team info upon clicking the individual team name in Standings table
 
-###Things that don't work from Phase 1:
+####Things that don't work from Phase 1:
 -form validation
 
-###Things that work from Phase 2:
+##Things that work from Phase 2:
 -utilized pre-defined schedule based on number of teams
 -capturing scores
 -updated standings with win/loss/percentage
 
-###Things that don't work from Phase 2:
+####Things that don't work from Phase 2:
 -sorting standings
 -our win/loss/% logic has a bug that doesn't always update certain wins/losses in the standings table.
