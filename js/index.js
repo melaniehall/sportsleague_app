@@ -64,10 +64,12 @@ $(document).ready(function(){
   function disableBtn(listTeams){
     if (listTeams.length < 4) {
       $('#addBtn').html('<a href="#myModal" role="button" class="btn btn-warning" data-toggle="modal">Sign Up Today! We need more teams start the season.</a> <br><br>')
+      $('#beginSeason').hide();
     } else if (listTeams.length === 8) {
       $('#addBtn').html('<a class="btn btn-danger disabled">Our league is at full capacity</a><br><br>')
     } else {
       $('#addBtn').html('<a href="#myModal" role="button" class="btn" data-toggle="modal">Add Your Team</a><br><br>')
+      $('#beginSeason').show();
     }
   };//end disableBtn
 
@@ -108,6 +110,8 @@ $(document).ready(function(){
 //****************** Begin Season Click / Populate Schedule *******************************
 
 $('#beginSeason').click(function(){
+
+  //remove Add Team button
   $("#addBtn").remove();
 
   $.ajax({
@@ -122,6 +126,7 @@ $('#beginSeason').click(function(){
 
 });//end Begin Season click
 
+  // defined s variable for schedule
   var s;
 
       var sched4 = [ 
@@ -149,10 +154,12 @@ $('#beginSeason').click(function(){
     ];
 
 function populateSchedule (d) {
- 
+
+      // Remove Begin Season Button / Add Update Scores Button
       $('#beginSeason').remove();
       $('.sidebar-nav').append('<a href="#updatescore" class="btn" id="updatescore">Update Scores</a>');
 
+      // Determine the schedule based on amount of teams playing
       if (d.length === 4) {
         s = sched4;
       } else if (d.length === 5 || d.length === 6) {
@@ -193,29 +200,24 @@ function populateSchedule (d) {
                   homeScore = homeTeam.week7;
                 }; 
 
+                // fill variables with values from the leagueData[].teamName (for both teams)
                 $("#week" + w).append("<tr><td>" + awayTeam.name + " vs. " + homeTeam.name + "</td><td class='score' data-week=" + w + " data-game= " + g + ">"+ awayScore + "-" + homeScore + "</td></tr>")
-                
 
-                // fill variables with values from the leagueArray[].teamName (for both teams)
-                // starting values for scores
+            }//end games loop
 
-              }//end games loop
+      } //end if statement for EVEN NUMBERS
 
 
+        else {  // BYE week team determined
+          var teamwithBye = d[s[w][0][1]-2].name
+          $('#scheduleTable').append("<tbody id='week" + w + "'class='tablehead'><tr><th>Week " + [w + 1] + "<br/>" +teamwithBye + " have a Bye</th><th>Score" + "</th></tr></tbody>")
 
-        } //end if statement for EVEN NUMBERS
+          for (g = 1 ; g < s[w].length; g++) {
 
-
- else{
-      var teamwithBye = d[s[w][0][1]-2].name
-      $('#scheduleTable').append("<tbody id='week" + w + "'class='tablehead'><tr><th>Week " + [w + 1] + "<br/>" +teamwithBye + " have a Bye</th><th>Score" + "</th></tr></tbody>")
-
-      for (g = 1 ; g < s[w].length; g++) {
-
-      awayTeam = d[s[w][g][0]-2];
-      homeTeam = d[s[w][g][1]-2];
-      
-      if (w === 0) {
+            awayTeam = d[s[w][g][0]-2];
+            homeTeam = d[s[w][g][1]-2];
+          
+            if (w === 0) {
                   awayScore = awayTeam.week1;
                   homeScore = homeTeam.week1;
                 } else if (w === 1) {
@@ -238,47 +240,51 @@ function populateSchedule (d) {
                   homeScore = homeTeam.week7;
                 };    
 
-      $("#week" + w).append("<tr><td>" + awayTeam.name + " vs. " + homeTeam.name + "</td><td class='score' data-week=" + w + " data-game= " + g + ">"+ awayScore + "-" + homeScore + "</td></tr>")
+            // fill variables with values from the leagueData[].teamName (for both teams)    
+            $("#week" + w).append("<tr><td>" + awayTeam.name + " vs. " + homeTeam.name + "</td><td class='score' data-week=" + w + " data-game= " + g + ">"+ awayScore + "-" + homeScore + "</td></tr>")
 
+          }//end games loop
 
+        } // end ELSE loop for BYE WEEKS 
 
-    }//end games loop
+      }// end FOR week loop
 
-
-} // end ELSE loop for BYE WEEKS 
-
-  }// end week loop
+// Click Event for Update Scores Button
 $('#updatescore').click(function(){
 
+    // Replace Update Scores Button with the alerted Done Updating button
     $('#updatescore').replaceWith('<a href="#doneupdating" class="btn btn-danger" id="doneupdating">Done Updating</a>')
 
+    // Inject input boxes and a submit button for scores
     $('.score').html("<input type='text' class='away' id='input1' size='1' />" + "-" + "<input class='home' type='text' id='input2' size= '1' />" + "<a class='submit btn btn-danger'>Submit</a>");
 
+        // Submit Button for each game's input pairs
         $('.submit').click(function(){
 
+            // create a unique week+game for each submit button
             week = $(this).parent().attr("data-week");
             game = $(this).parent().attr("data-game");
-            console.log(week);
-            console.log(game);
+            
+            // even team schedule
             if (leagueData.length % 2 === 0) {
-
                 awayTeam = leagueData[s[week][game][0]-1];
                 homeTeam = leagueData[s[week][game][1]-1];
-            } else {
-
+            } else { // odd team schedule
                 awayTeam = leagueData[s[week][game][0]-2];
                 homeTeam = leagueData[s[week][game][1]-2];
             };
 
+            // set score variables for the inputs associated with the submit button
             awayScore = $(this).prevAll("input[class='away']").val();
             homeScore = $(this).prevAll("input[class='home']").val();
-            alert(awayScore);
-            alert(homeScore);
-            alert(week);
-      
+            
+            
+            
+        // call function to send all game data to server
         recordScore(homeTeam, awayTeam, homeScore, awayScore, week);  
 
-        if (week === 0) {
+                //pair the week with the score + team
+                if (week === 0) {
                   awayScore = awayTeam.week1;
                   homeScore = homeTeam.week1;
                 } else if (week === 1) {
@@ -305,7 +311,7 @@ $('#updatescore').click(function(){
 
         $(this).parent().html(awayScore + " - " + homeScore);
 
-        // Adding Wins + Losses to Standings Table
+        // Adding Wins + Losses + WinPercentage to Standings Table
 
         if ( +awayScore > +homeScore) {
 
@@ -323,7 +329,6 @@ $('#updatescore').click(function(){
               totalGames: awaytotalGames},
             success: function(data){
               listTeams();
-              // alert(homeScore);
               console.log(data);
             }
           });//end PUT
@@ -338,7 +343,6 @@ $('#updatescore').click(function(){
               totalGames: hometotalGames},
             success: function(data){
               listTeams();
-              // alert(awayScore);
               console.log(data);
             }
           });// end PUT
@@ -358,7 +362,7 @@ $('#updatescore').click(function(){
               totalGames: hometotalGames},
             success: function(data){
               listTeams();
-              // alert(homeScore);
+              
               console.log(data);
             }
           });//end PUT
@@ -373,17 +377,17 @@ $('#updatescore').click(function(){
               totalGames: awaytotalGames},
             success: function(data){
               listTeams();
-              // alert(awayScore);
+              
               console.log(data);
             }
           });// end PUT
-          }//end Else
+        }//end Else
 
 
     }); //end Submit CLick    
     
 
-
+      // Click event for Done Updating Button
       $('#doneupdating').click(function(){
         $("#scheduleTable").html("");
           $.ajax({
@@ -399,9 +403,9 @@ $('#updatescore').click(function(){
 
 
           $(this).remove();
-    })
+      });// end Done Updating Click
 
-}); //end UpdateScore Click
+  }); //end UpdateScore Click
 
 }// end populate
 
@@ -423,7 +427,6 @@ if (week === 0) {
     data: {
       week1: homeScore},
     success: function(data){
-      // alert(homeScore);
       console.log(data);
     }
   });
@@ -435,170 +438,170 @@ if (week === 0) {
     data: {
       week1: awayScore},
     success: function(data){
-      // alert(awayScore);
       console.log(data);
     }
   });
-}//end week 1
+  }//end week 1
+
   else if (week === 1) {
     $.ajax({
-    url: '/backliftapp/teams/' + homeTeam.id + '',
-    type: "PUT",
-    dataType: "JSON", 
-    data: {
-      week2: homeScore},
-    success: function(data){
-      // alert(homeScore);
-      console.log(data);
-    }
-  });
+      url: '/backliftapp/teams/' + homeTeam.id + '',
+      type: "PUT",
+      dataType: "JSON", 
+      data: {
+        week2: homeScore},
+      success: function(data){
+        // alert(homeScore);
+        console.log(data);
+      }
+      });
 
-  $.ajax({
-    url: '/backliftapp/teams/' + awayTeam.id + '',
-    type: "PUT",
-    dataType: "JSON", 
-    data: {
-      week2: awayScore},
-    success: function(data){
-      // alert(awayScore);
-      console.log(data);
-    }
-  });
+    $.ajax({
+      url: '/backliftapp/teams/' + awayTeam.id + '',
+      type: "PUT",
+      dataType: "JSON", 
+      data: {
+        week2: awayScore},
+      success: function(data){
+        // alert(awayScore);
+        console.log(data);
+      }
+      });
   }//end week 2
 
   else if (week === 2) {
-    $.ajax({
-    url: '/backliftapp/teams/' + homeTeam.id + '',
-    type: "PUT",
-    dataType: "JSON", 
-    data: {
-      week3: homeScore},
-    success: function(data){
-      // alert(homeScore);
-      console.log(data);
-    }
-  });
+      $.ajax({
+      url: '/backliftapp/teams/' + homeTeam.id + '',
+      type: "PUT",
+      dataType: "JSON", 
+      data: {
+        week3: homeScore},
+      success: function(data){
+        // alert(homeScore);
+        console.log(data);
+      }
+      });
 
-  $.ajax({
-    url: '/backliftapp/teams/' + awayTeam.id + '',
-    type: "PUT",
-    dataType: "JSON", 
-    data: {
-      week3: awayScore},
-    success: function(data){
-      // alert(awayScore);
-      console.log(data);
-    }
-  });
+    $.ajax({
+      url: '/backliftapp/teams/' + awayTeam.id + '',
+      type: "PUT",
+      dataType: "JSON", 
+      data: {
+        week3: awayScore},
+      success: function(data){
+        // alert(awayScore);
+        console.log(data);
+      }
+      });
   }//end week 3
+
   else if (week === 3) {
     $.ajax({
-    url: '/backliftapp/teams/' + homeTeam.id + '',
-    type: "PUT",
-    dataType: "JSON", 
-    data: {
-      week4: homeScore},
-    success: function(data){
-      // alert(homeScore);
-      console.log(data);
-    }
-  });
+      url: '/backliftapp/teams/' + homeTeam.id + '',
+      type: "PUT",
+      dataType: "JSON", 
+      data: {
+        week4: homeScore},
+      success: function(data){
+        // alert(homeScore);
+        console.log(data);
+      }
+    });
 
-  $.ajax({
-    url: '/backliftapp/teams/' + awayTeam.id + '',
-    type: "PUT",
-    dataType: "JSON", 
-    data: {
-      week4: awayScore},
-    success: function(data){
-      // alert(awayScore);
-      console.log(data);
-    }
-  });
+    $.ajax({
+      url: '/backliftapp/teams/' + awayTeam.id + '',
+      type: "PUT",
+      dataType: "JSON", 
+      data: {
+        week4: awayScore},
+      success: function(data){
+        // alert(awayScore);
+        console.log(data);
+      }
+    });
   }//end week 4
 
   else if (week === 4) {
     $.ajax({
-    url: '/backliftapp/teams/' + homeTeam.id + '',
-    type: "PUT",
-    dataType: "JSON", 
-    data: {
-      week5: homeScore},
-    success: function(data){
-      // alert(homeScore);
-      console.log(data);
-    }
-  });
+      url: '/backliftapp/teams/' + homeTeam.id + '',
+      type: "PUT",
+      dataType: "JSON", 
+      data: {
+        week5: homeScore},
+      success: function(data){
+        // alert(homeScore);
+        console.log(data);
+      }
+    });
 
-  $.ajax({
-    url: '/backliftapp/teams/' + awayTeam.id + '',
-    type: "PUT",
-    dataType: "JSON", 
-    data: {
-      week5: awayScore},
-    success: function(data){
-      // alert(awayScore);
-      console.log(data);
-    }
-  });
+    $.ajax({
+      url: '/backliftapp/teams/' + awayTeam.id + '',
+      type: "PUT",
+      dataType: "JSON", 
+      data: {
+        week5: awayScore},
+      success: function(data){
+        // alert(awayScore);
+        console.log(data);
+      }
+    });
   }//end week 5
 
   else if (week === 5) {
     $.ajax({
-    url: '/backliftapp/teams/' + homeTeam.id + '',
-    type: "PUT",
-    dataType: "JSON", 
-    data: {
-      week6: homeScore},
-    success: function(data){
-      // alert(homeScore);
-      console.log(data);
-    }
-  });
+      url: '/backliftapp/teams/' + homeTeam.id + '',
+      type: "PUT",
+      dataType: "JSON", 
+      data: {
+        week6: homeScore},
+      success: function(data){
+        // alert(homeScore);
+        console.log(data);
+      }
+    });
 
-  $.ajax({
-    url: '/backliftapp/teams/' + awayTeam.id + '',
-    type: "PUT",
-    dataType: "JSON", 
-    data: {
-      week6: awayScore},
-    success: function(data){
-      // alert(awayScore);
-      console.log(data);
-    }
-  });
+    $.ajax({
+      url: '/backliftapp/teams/' + awayTeam.id + '',
+      type: "PUT",
+      dataType: "JSON", 
+      data: {
+        week6: awayScore},
+      success: function(data){
+        // alert(awayScore);
+        console.log(data);
+      }
+    });
   }//end week 6
 
   else if (week === 6) {
     $.ajax({
-    url: '/backliftapp/teams/' + homeTeam.id + '',
-    type: "PUT",
-    dataType: "JSON", 
-    data: {
-      week7: homeScore},
-    success: function(data){
-      // alert(homeScore);
-      console.log(data);
-    }
-  });
+      url: '/backliftapp/teams/' + homeTeam.id + '',
+      type: "PUT",
+      dataType: "JSON", 
+      data: {
+        week7: homeScore},
+      success: function(data){
+        console.log(data);
+      }
+    });
 
-  $.ajax({
-    url: '/backliftapp/teams/' + awayTeam.id + '',
-    type: "PUT",
-    dataType: "JSON", 
-    data: {
-      week7: awayScore},
-    success: function(data){
-      // alert(awayScore);
-      console.log(data);
-    }
-  });
+    $.ajax({
+      url: '/backliftapp/teams/' + awayTeam.id + '',
+      type: "PUT",
+      dataType: "JSON", 
+      data: {
+        week7: awayScore},
+      success: function(data){
+        console.log(data);
+      }
+    });
   }//end week 7
+  
   else {
     alert("error!");
   }
 
-};// recordScore Function
+};// end recordScore Function
 
 //**************** Clear Form Function *****************************************************
 
