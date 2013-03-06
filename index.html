@@ -4,22 +4,21 @@
     <meta charset="utf-8">
     <title>Beer League Baseball Challenge</title>
   
-  <!-- Styling -->
-  <link href="css/bootstrap.css" rel="stylesheet">
-  <link href="css/bootstrap-responsive.css" rel="stylesheet">
-   <link href="css/style.css" rel="stylesheet"> 
+    <!-- Styling -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet"> 
   
-  <!-- Scripts -->
-  <script src="js/jquery-1.7.2.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/index.js"></script>
+    <!-- Scripts -->
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/index.js"></script>
 
-  
 
-  
   </head>
 
   <body>
+<!-- Nav Bar -->
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
@@ -46,17 +45,18 @@
     </div>
 <!-- End Nav Bar -->
 
-<div class="page-wrap container-fluid">
-  <div class="tabbable">
-    <ul class="tab-bar nav nav-tabs">
-      <li class="active">
-        <a href="#standings" data-toggle="tab"><h4>Standings</h4></a>
-      </li>
-      <li><a href="#schedule" data-toggle="tab"><h4>Schedule/Scores</h4></a></li>
-    </ul>
-    <div class="tab-content span9">
-            <div class="hero-unit tab-pane active" id="standings">
-            
+<!-- Page Container -->
+    <div class="page-wrap container-fluid">
+      <div class="tabbable">
+        <ul class="tab-bar nav nav-tabs">
+          <li class="active">
+            <a href="#standings" data-toggle="tab"><h4>Standings</h4></a>
+          </li>
+          <li><a href="#schedule" data-toggle="tab"><h4>Schedule/Scores</h4></a></li>
+        </ul>
+        <div class="tab-content span9">
+    <!-- Standings Tab -->
+          <div class="hero-unit tab-pane active" id="standings">
             <h3>Standings</h3>
             <p class="lastupdated">(Last updated on: 02/18/13)</p>
             <table class="table">
@@ -66,98 +66,90 @@
               <th>Losses </th>
               <th>%</th>
               </thead>
-            <tbody id="standingsTable"></tbody>
-
+            <tbody id="standingsTable">
+            <!-- Will be populated by JS -->
+            </tbody>
             </table>
           </div>
-
+    <!-- Schedule Tab -->
           <div id="schedule" class="tab-pane hero-unit schedule">
-            
             <h3>Schedule</h3>
             <p class="lastupdated">(Last updated on: 02/18/13)</p>
             <table id="scheduleTable">
-              
+            <!-- Will be populated JS -->
             </table>
+
           </div> <!-- End Schedule Tab -->
 
-
-        
         </div><!--/span-->
-<!-- Sidebar -->
-        
 
+    <!-- Sidebar -->
         <div class="span3">
           <div class="well sidebar-nav">
-<!-- Modal Button -->
-          <div id="addBtn">
-            <!-- Used JavaScript to replace contents with our Add Team Button based on the number of teams -->
-          </div>
-<!-- Modal -->
-<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Team Setup</h3>
-  </div>
-  <div class="modal-body">
-    <!-- Form Draft -->
-  <form id="form" class="form-horizontal">
-    <div class="control-group">
-      <label class="control-label" for="teamName">Team Name:</label>
-      <div class="controls">
-        <em>*</em><input type="text" id="inputName" class="team_inputs required" name="name" placeholder="Team Name" maxlength="30">
-      </div>
-    </div>  
-    <div class="control-group">
-      <label class="control-label" for="managerInfo">Manager Info</label>
-    </div>
-    <div class="control-group">
-      <label class="control-label" for="mgrName">Name:</label>
-      <div class="controls">
-        <em>*</em><input type="text" id="inputFirst" class="team_inputs required" name="name" placeholder="First">
-        <em>*</em><input type="text" id="inputLast" class="team_inputs required" name="name" placeholder="Last">
-      </div>
-    </div>
-    <div class="control-group">
-      <label class="control-label" for="phone" value="phone">Phone #:</label>
-      <div class="controls">
-        <em>*</em><input type="tel" id="phone" class="team_inputs required" name="number" placeholder="123-456-7890" maxlength="12">
-      </div>
-    </div>
-    <div class="control-group">
-      <label class="control-label" for="zip" value="zip">ZIP code:</label>
-      <div class="controls">
-        <em>*</em><input type="text" id="zip" class="team_inputs required" name="number" placeholder="37207" maxlength="5">
-      </div>
-    </div>
-    <div class="control-group">
-      <label class="control-label" for="sponsor" value="sponsor">Team Sponsor:</label>
-      <div class="controls">
-        <em>*</em><input type="text" id="sponsor" class="team_inputs required" name="name" placeholder="Sponsor">
-      </div>
-    </div>      
-  </form>
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    <button id="addteam" class="btn btn-primary submit" type="submit" data-dismiss="modal" aria-hidden="true">Add Team</button>
-  </div>
-</div> <!-- End Modal -->
 
+    <!-- Modal Button -->
+            <div id="addBtn">
+    <!-- Used JavaScript to replace contents with our Add Team Button based on the number of teams -->
+            </div>
 
+    <!-- Modal -->
+            <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Team Setup</h3>
+              </div>
+              <div class="modal-body">
+                <!-- Form Draft -->
+              <form id="form" class="form-horizontal">
+                <div class="control-group">
+                  <label class="control-label" for="teamName">Team Name:</label>
+                  <div class="controls">
+                    <em>*</em><input type="text" id="inputName" class="team_inputs required" name="name" placeholder="Team Name" maxlength="30">
+                  </div>
+                </div>  
+                <div class="control-group">
+                  <label class="control-label" for="managerInfo">Manager Info</label>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="mgrName">Name:</label>
+                  <div class="controls">
+                    <em>*</em><input type="text" id="inputFirst" class="team_inputs required" name="name" placeholder="First">
+                    <em>*</em><input type="text" id="inputLast" class="team_inputs required" name="name" placeholder="Last">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="phone" value="phone">Phone #:</label>
+                  <div class="controls">
+                    <em>*</em><input type="tel" id="phone" class="team_inputs required" name="number" placeholder="123-456-7890" maxlength="12">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="zip" value="zip">ZIP code:</label>
+                  <div class="controls">
+                    <em>*</em><input type="text" id="zip" class="team_inputs required" name="number" placeholder="37207" maxlength="5">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="sponsor" value="sponsor">Team Sponsor:</label>
+                  <div class="controls">
+                    <em>*</em><input type="text" id="sponsor" class="team_inputs required" name="name" placeholder="Sponsor">
+                  </div>
+                </div>      
+              </form>
+              </div>
+              <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                <button id="addteam" class="btn btn-primary submit" type="submit" data-dismiss="modal" aria-hidden="true">Add Team</button>
+              </div>
+            </div> <!-- End Modal -->
 
-
-            <!-- <a href="#updatescore" class="btn" id="updatescore">Update Scores</a><br><br> -->
-            <a href="#beginseason" class="btn" id="beginSeason">Begin Season</a>
+    <!-- Button -->
+                <a href="#beginseason" class="btn" id="beginSeason">Begin Season</a>
+                
             </div><!--/.well -->
           </div><!--/span-->
         </div> <!-- End tabs div -->
-      </div><!--/row-->
-
-    </div>
-
-
-
-
+    </div><!--/End page container-->
 
   </body>
-  </html>  
+</html>  
